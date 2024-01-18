@@ -1,59 +1,55 @@
-# Basic NodeJS Project Structure
+# Basic REST API and CRUD Implementation
 
-This is a base node js project template, which anyone can use as it has been prepared, by keeping some of the most important code practices and project management recommendations. Feel free to change anything.
+Every table is going to be considered a model. So, in order to create a table, we have to create a model. We can do that:
 
-`src` -> Inside the src folder all the actual source code regarding the project will reside but this will not include any kind of tests. (You might want to make separate tests folder)
+- ```
+  npx sequelize model:generate --name ModelName -- attributes col1:datatype, col2:datatype
+  ```
 
-Lets take a look inside the `src` folder
+On executing this command, it create a model file and also migration file for that model.
 
-- `config` -> In this folder anything and everything regarding any configurations or setup of a library or module will be done. For example: setting up `dotenv` so that we can use the environment variables anywhere in a cleaner fashion, this is done in the `server-config.js`. One more example can be to setup you logging library that can help you to prepare meaningful logs, so configuration for this library should also be done here.
+Note: This will not actually create tables in the database yet.
 
-- `routes` -> In the routes folder, we register a route and the corresponding middleware and controllers to it.
+Now, using the migration file, it tells that using this version create the table i.e in the next model commit there will be table created with the listed properties and if we want to make changes we need to do it before commit.
 
-- `middlewares` -> they are just going to intercept the incoming requests where we can write our validators, authenticators etc.
+We can certainly revert the changes though.
 
-- `controllers` -> they are kind of the last middlewares as post them you call your business layer to execute the budiness logic. In controllers we just receive the incoming requests and data and then pass it to the business layer, and once business layer returns an output, we structure the API response in controllers and send the output.
+## DB level and JavaScript level constraint
 
-- `repositories` -> this folder contains all the logic using which we interact the DB by writing queries, all the raw queries or ORM queries will go here.
+- The contraints applied in the model.js file will be JavaScript level constraint whereas if we need the constraint in our db table too, then we need to apply that in the migration file too.
 
-- `services` -> contains the buiness logic and interacts with repositories for data from the database
+## Apply migration to create table
 
-- `utils` -> contains helper methods, error classes etc.
+- Applies all the pending migration to our database. It knows and tracks using the unique number present in migration filename.
 
-- `seeders` -> If we want to have some set of data that is not going to change, we can include in seeders folder. This is given by sequelize-cli we used in our project.
+- ```
+  npx sequelize db:migrate
+  ```
 
-- `migrations` -> In simple terms, migrations file are used to do version controlling of our database. These are simple language scripts.
-  As we are using Nodejs and sequelize, it will be a JavaScript file. Here, we will programatically write on how to maintain versions of your database. Every version will have unique id or version. Sequelize provides us the command to create migration file.
+## How To Undo The Last Migration
 
-### Setup the project
-
-- Download this template from github and open it in your favourite text editor.
-- Go inside the folder path and execute the following command:
+-```
+npx sequelize db:migrate:undo
 
 ```
-npm install
-```
-
-- In the root directory create a `.env` file and add the following env variables
-  ```
-      PORT=<port number of your choice>
-  ```
-  ex:
-  ```
-      PORT=3000
-  ```
-- go inside the `src` folder and execute the following command:
-  ```
-    npx sequelize init
-  ```
-- By executing the above command you will get migrations and seeders folder along with a config.json inside the config folder.
-
-- If you're setting up your development environment, then write the username of your db, password of your db and in dialect mention whatever db you are using for ex: mysql, mariadb etc.
-
-- If you're setting up test or prod environment, make sure you also replace the host with the hosted db url.
-
-- To run the server execute
 
 ```
-npm run dev
-```
+
+## Adding migration and Undo Migration
+
+-- Adding : async up function is applied
+
+-- Undo: async down function is applied. (It internally says drop the table, we might loose the data, so we have to be careful)
+
+## seeders folder
+
+-- use case: when testing we prepare seeders folder to test.
+
+-- Command to create seeder file
+--- npx sequelize seed: generate --n
+ame add-airplanes
+-- This will generate a custom seeder file where we can bulkInsert test data using async up function and also either bulk delete using async down function if we pass empty object else we can use Operator object provided by sequelize to delete based on conditional operators.
+
+## Features
+
+### Flights Search Service
