@@ -22,8 +22,34 @@ throw new AppError('Cannot create a new city object', StatusCodes.INTERNAL_SERVE
 
 }
 
+async function destroyCity(id) {
+  try {
+     const response = await cityRepository.destroy(id);
+     return response;
+  } catch (error) {
+      if(error.statusCode == StatusCodes.NOT_FOUND) {
+          throw new AppError('The city you requested to delete is not found', error.statusCode);
+      }
+      throw new AppError('Cannot delete data of the city', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
+
+async function updateCity(id, data) {
+  try {
+     const response = await cityRepository.update(id, data);
+     return response;
+  } catch (error) {
+      if(error.statusCode == StatusCodes.NOT_FOUND) {
+          throw new AppError('The city you requested to update is not found', error.statusCode);
+      }
+      throw new AppError('Cannot update the city data', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
 
 
 module.exports = {
-createCity
+createCity,
+destroyCity,
+updateCity
 }
