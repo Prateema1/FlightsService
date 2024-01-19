@@ -50,6 +50,12 @@ npx sequelize db:migrate:undo
 ame add-airplanes
 -- This will generate a custom seeder file where we can bulkInsert test data using async up function and also either bulk delete using async down function if we pass empty object else we can use Operator object provided by sequelize to delete based on conditional operators.
 
+## Database level change, update previous model
+
+-- npx sequelize migration:generate --name update-city-airport-association
+
+-- Migration gives us timestamping or versioning of our database schema.
+
 ## Features
 
 ### Flights Search Service
