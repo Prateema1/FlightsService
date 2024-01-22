@@ -56,6 +56,10 @@ ame add-airplanes
 
 -- Migration gives us timestamping or versioning of our database schema.
 
+## Power of ORM
+
+--
+
 ## Features
 
 ### Flights Search Service

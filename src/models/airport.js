@@ -14,29 +14,29 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.City, {
         foreignKey: 'city_id',
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        // onUpdate: 'CASCADE'
       });
       
     }
   }
   Airport.init({
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },
     code:{
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     }, 
     address: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       unique: true
     },
-    cityId: {
+    city_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      type: Sequelize.DATE
     },
   }, {
     sequelize,
