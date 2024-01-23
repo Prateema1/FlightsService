@@ -57,8 +57,7 @@ module.exports = {
         allowNull: false,
       },
       boardingGate: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
