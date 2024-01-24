@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'airplaneId'
       });
       this.belongsTo(models.Airport, {
-        foreignKey: 'code'
+        foreignKey: 'departureAirportId'
       });
       this.belongsTo(models.Airport, {
-        foreignKey: 'code'
+        foreignKey: 'arrivalAirportId'
       });
     }
   }
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
     }, 
-      totalSeats: {
+      totalSeats: {   // total remaining seats
         type: DataTypes.INTEGER,
         allowNull: false
     },
