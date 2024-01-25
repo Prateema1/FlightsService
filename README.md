@@ -75,3 +75,7 @@ price
 flightname : UK303
 Destination airport , arrival airport
 flight time
+
+## Creating seed files
+
+- npx sequelize seed:generate --name seedname
