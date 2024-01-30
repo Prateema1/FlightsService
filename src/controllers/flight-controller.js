@@ -83,9 +83,16 @@ async function getFlight(req, res) {
   }
 }
 
+/**
+ * PATCH: /flights/:id
+ * req-body {
+ * seats: 5,
+ * dec: 0/1
+ * }
+ */
+
 async function updateSeats(req, res) {
   try {
-    console.log(req.params, "REQ PARAMS");
     const response = await FlightService.updateSeats({
       flightId: req.params.id,
       seats: req.body.seats,
